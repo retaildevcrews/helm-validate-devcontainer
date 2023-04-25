@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/devcontainers/base:alpine-3.17
+
+# some images require specific values
+ARG USERNAME=vscode
+
+# log the docker build start event
+RUN echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build start" >> /home/$USERNAME/status
+
+RUN chown -R $USERNAME:$USERNAME /home/$USERNAME
+
+# log the docker build complete
+RUN echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build complete" >> /home/$USERNAME/status

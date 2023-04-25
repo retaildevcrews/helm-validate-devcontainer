@@ -1,2 +1,2 @@
-# helm-validate-devcontainer
+# helm-validation-devcontainer
 A DevContainer for validating Helm Charts

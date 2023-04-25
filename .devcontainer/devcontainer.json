@@ -1,0 +1,24 @@
+{
+	"name": "Helm Validation",
+	"dockerFile": "Dockerfile",
+
+	// do not change these if you want Docker in Docker support (needed for k3d)
+	"runArgs": ["--init", "--privileged"],
+	"mounts": ["source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"],
+	"overrideCommand": false,
+
+	// some base images require a specific user name
+	"remoteUser": "vscode",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "files.trimTrailingWhitespace": true,
+                "files.trimFinalNewlines": true,
+                "files.insertFinalNewline": true
+            },
+            "extensions": []
+        }
+    }
+}
