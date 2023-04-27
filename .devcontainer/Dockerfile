@@ -14,4 +14,3 @@ RUN wget https://github.com/stackrox/kube-linter/releases/download/v$KUBE_LINTER
     apk add --update --no-cache curl openssl ca-certificates && \
     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sh && \
     helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v$HELM_UNIT_TEST_VERSION
-
