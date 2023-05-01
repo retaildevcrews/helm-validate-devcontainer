@@ -10,6 +10,7 @@ This repository contains a development container (devcontainer) to streamline th
   - [Linting with Kube Linter](#linting-with-kube-linter)
   - [Running Helm Unit Tests](#running-helm-unit-tests)
 - [Customizing the Devcontainer](#customizing-the-devcontainer)
+- [Using GitHub Codespaces](#using-github-codespaces)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -45,7 +46,7 @@ cd helm-chart-validation-devcontainer
 To lint your Kubernetes resources using `kube-linter`, run the following command:
 
 ```
-bash kube-linter lint <path-to-your-helm-chart>
+kube-linter lint <path-to-your-helm-chart>
 ```
 
 `kube-linter` will analyze your resources and provide suggestions and warnings based on best practices.
@@ -65,6 +66,11 @@ This command will run all the unit tests defined in the `_test.yaml` files withi
 To customize the devcontainer, modify the `.devcontainer/Dockerfile` and `.devcontainer/devcontainer.json` files as needed. For example, you can add new tools or change the base image.
 
 After making changes, rebuild the container by pressing `F1`, typing `Remote-Containers: Rebuild Container`, and pressing `Enter`.
+
+## Using GitHub Codespaces
+
+This devcontainer is also available as a GitHub Codespace. To use it in a Codespace, simply open the repository in a new Codespace, and GitHub will automatically build and launch the container with all the pre-configured tools for validating and testing Helm charts. For more information on using GitHub Codespaces, please refer to the [official documentation](https://docs.github.com/en/codespaces).
+
 
 ## Contributing
 
