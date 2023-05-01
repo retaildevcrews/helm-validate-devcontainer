@@ -16,7 +16,7 @@ This repository contains a development container (devcontainer) to streamline th
 
 ## Prerequisites
 
-To use this devcontainer, you'll need the following tools installed on your local machine:
+To use this devcontainer, you'll need the following tools installed on your local machine. Alternatively, you can use it as a Codespace, as mentioned in the section below:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Visual Studio Code](https://code.visualstudio.com/download)
@@ -28,7 +28,7 @@ To use this devcontainer, you'll need the following tools installed on your loca
 
 ```bash
 
-git clone https://github.com/yourusername/helm-chart-validation-devcontainer.git
+git clone https://github.com/joaquinrz/helm-validate-devcontainer.git
 cd helm-chart-validation-devcontainer
 
 ```
