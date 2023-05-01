@@ -51,6 +51,8 @@ kube-linter lint <path-to-your-helm-chart>
 
 `kube-linter` will analyze your resources and provide suggestions and warnings based on best practices.
 
+Reference the kube-linter [Docs](https://docs.kubelinter.io/#/configuring-kubelinter) for advanced configurations
+
 ### Running Helm Unit Tests
 
 To run unit tests for your Helm charts using the `helm unittest` plugin, execute the following command:
