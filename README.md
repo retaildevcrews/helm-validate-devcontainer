@@ -43,15 +43,26 @@ cd helm-chart-validation-devcontainer
 
 ### Linting with Kube Linter
 
+Kube Linter is a static analysis tool that helps ensure your Kubernetes resources follow best practices. By analyzing your Kubernetes manifests, Kube Linter provides suggestions and warnings to help you maintain a secure, efficient, and stable cluster.
+
 To lint your Kubernetes resources using `kube-linter`, run the following command:
 
-```
+```bash
 kube-linter lint <path-to-your-helm-chart>
 ```
 
-`kube-linter` will analyze your resources and provide suggestions and warnings based on best practices.
+`kube-linter` will analyze your resources and provide suggestions and warnings based on best practices. This can include detecting potential security risks, identifying deprecated API versions, and suggesting resource limits and requests.
 
-Reference the kube-linter [Docs](https://docs.kubelinter.io/#/configuring-kubelinter) for advanced configurations
+In the `samples` directory, you will find a Helm chart to validate and a custom configuration for kube-linter. You can run this by executing the following command: 
+
+```bash
+kube-linter lint samples/chart/ngsa --config samples/kube-lint/config.yaml
+```
+
+This command will lint the `ngsa` Helm chart in the `samples/chart` directory using the custom configuration file located at `samples/kube-lint/config.yaml`.
+
+Kube Linter supports advanced configurations, allowing you to customize its behavior to better suit your specific needs. You can configure the tool to ignore certain checks, modify the severity of specific issues, or add custom checks. To learn more about configuring Kube Linter, refer to the [documentation](https://docs.kubelinter.io/#/configuring-kubelinter).
+
 
 ### Running Helm Unit Tests
 
