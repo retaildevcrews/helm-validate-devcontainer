@@ -13,7 +13,13 @@ RUN apk add --no-cache curl openssl ca-certificates && \
 
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 
-ARG USERNAME=vscode
+ARG USERNAME=nonroot
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
 ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
