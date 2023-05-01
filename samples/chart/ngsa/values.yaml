@@ -1,0 +1,6 @@
+name: ngsa
+replicas: 1
+zone: dev
+region: dev
+port: 8080
+prometheusReleaseName: prometheus
