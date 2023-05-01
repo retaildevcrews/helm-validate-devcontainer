@@ -14,9 +14,9 @@ RUN apk add --no-cache curl openssl ca-certificates && \
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 
 ARG USERNAME=vscode
-ARG GROUPNAME=$USERNAME
+# ARG GROUPNAME=$USERNAME
 
-RUN addgroup -S $GROUPNAME && adduser -D -G $GROUPNAME $USERNAME
+# RUN addgroup -S $GROUPNAME && adduser -D -G $GROUPNAME $USERNAME
 
 ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
