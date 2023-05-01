@@ -16,7 +16,7 @@ FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 ARG USERNAME=nonroot
 ARG GROUPNAME=$USERNAME
 
-RUN addgroup -S $GROUPNAME && adduser $USERNAME -g $GROUPNAME 
+RUN addgroup -S $GROUPNAME && adduser -D -G $GROUPNAME $USERNAME
 
 ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
