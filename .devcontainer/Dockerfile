@@ -14,12 +14,9 @@ RUN apk add --no-cache curl openssl ca-certificates && \
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 
 ARG USERNAME=nonroot
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG GROUPNAME=$USERNAME
 
-# Create the user
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+RUN addgroup -S $GROUPNAME && adduser $USERNAME -g $GROUPNAME 
 
 ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
