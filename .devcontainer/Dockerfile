@@ -13,11 +13,15 @@ RUN apk add --no-cache curl openssl ca-certificates && \
 
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 
-#ARG USERNAME=vscode
+ARG USERNAME=vscode
+RUN groupadd --gid 1000 $USERNAME && \
+    useradd --uid 1000 --gid 1000 -m $USERNAME
+
 ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
 COPY --from=builder /usr/local/bin/kube-linter /usr/local/bin/kube-linter
 COPY --from=builder /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=builder /root/.local/share/helm/plugins $HELM_PLUGINS
 
-#RUN chown -R $USERNAME:$USERNAME /home/$USERNAME
+RUN chown -R $USERNAME:$USERNAME /home/$USERNAME
+USER $USERNAME
