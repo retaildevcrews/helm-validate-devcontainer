@@ -14,7 +14,7 @@ RUN apk add --no-cache curl openssl ca-certificates && \
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
 
 ARG USERNAME=vscode
-ENV HELM_PLUGINS /home/vscode/.local/share/helm/plugins
+ENV HELM_PLUGINS /workspaces/.local/share/helm/plugins
 
 COPY --from=builder /usr/local/bin/kube-linter /usr/local/bin/kube-linter
 COPY --from=builder /usr/local/bin/helm /usr/local/bin/helm
