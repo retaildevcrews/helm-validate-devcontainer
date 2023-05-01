@@ -12,6 +12,6 @@ RUN chown -R $USERNAME:$USERNAME /home/$USERNAME
 RUN wget https://github.com/stackrox/kube-linter/releases/download/v$KUBE_LINTER_VERSION/kube-linter-linux.tar.gz && \
     tar -xzf kube-linter-linux.tar.gz && mv kube-linter /usr/local/bin/ && rm kube-linter-linux.tar.gz &&\
     apk add --update --no-cache curl openssl ca-certificates && \
-    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sh && sleep 120 \
+    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sh && sleep 120 && \
     helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v$HELM_UNIT_TEST_VERSION
 
