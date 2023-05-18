@@ -15,7 +15,7 @@ spec:
         app: ngsa
     spec:
       containers:
-        - naame: app
+        - name: app
           image: ghcr.io/retaildevcrews/ngsa-app:beta
           imagePullPolicy: Always
 
@@ -46,28 +46,15 @@ spec:
               path: /healthz
               port: {{ .Values.port }}
 
-          # resources:
-          #   limits:
-          #     cpu: 1000m
-          #     memory: 256Mi
-          #   requests:
-          #     cpu: 200m
-          #     memory: 64Mi
+          resources:
+             limits:
+               cpu: 1000m
+               memory: 256Mi
+             requests:
+               cpu: 200m
+               memory: 64Mi
 
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.name }}
-  labels:
-    app: {{ .Values.name }}
-spec:
-  type: ClusterIP
-  ports:
-    - port: {{ .Values.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    app: {{ .Values.name }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true 
