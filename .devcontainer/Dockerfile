@@ -17,8 +17,7 @@ RUN apk add --no-cache curl openssl ca-certificates && \
     helm plugin install https://github.com/helm-unittest/helm-unittest.git --version v$HELM_UNIT_TEST_VERSION && \
     wget https://github.com/yannh/kubeconform/releases/download/v$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz && \
     tar -xzf kubeconform-linux-amd64.tar.gz && mv kubeconform /usr/local/bin/ && \
-    rm -rf /var/cache/apk/* /root/.cache kube-linter* kubeconform* && \
-    rm kube-linter-linux.tar.gz kubeconform-linux-amd64.tar.gz
+    rm -rf /var/cache/apk/* /root/.cache kube-linter* kubeconform*
 
 # Release stage
 FROM mcr.microsoft.com/devcontainers/base:${BASE_IMAGE_VERSION}
