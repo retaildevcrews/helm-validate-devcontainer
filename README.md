@@ -1,6 +1,6 @@
 # Helm Validate - Devcontainer
 
-This repository contains a development container (devcontainer) to streamline the process of validating and testing Helm charts. The devcontainer is pre-configured with essential tools, such as `kube-linter` for linting Kubernetes resources and `helm unittest` for running Helm chart unit tests.
+This repository contains a development container (devcontainer) to streamline the process of validating and testing Helm charts. The devcontainer is pre-configured with essential tools, such as `kube-linter` for linting Kubernetes resources and `helm unittest` for running Helm chart unit tests, and `kubeconform` for validating Kubernetes resources.
 
 ## Table of Contents
 
@@ -9,6 +9,7 @@ This repository contains a development container (devcontainer) to streamline th
 - [Using the Devcontainer](#using-the-devcontainer)
   - [Linting with Kube Linter](#linting-with-kube-linter)
   - [Running Helm Unit Tests](#running-helm-unit-tests)
+  - [Validating with Kubeconform](#validating-with-kubeconform)
 - [Customizing the Devcontainer](#customizing-the-devcontainer)
 - [Using GitHub Codespaces](#using-github-codespaces)
 - [Contributing](#contributing)
@@ -73,6 +74,40 @@ helm unittest <path-to-your-helm-chart>
 ```
 
 This command will run all the unit tests defined in the `_test.yaml` files within your Helm chart's `tests` directory.
+
+
+### Validating with Kubeconform
+
+Kubeconform is a tool that validates Kubernetes resources against the Kubernetes OpenAPI specification. It helps ensure your resources are compliant with the Kubernetes API, providing warnings and errors for non-compliant configurations.
+
+To validate your Kubernetes resources using `kubeconform`, run the following command:
+
+```bash
+kubeconform -strict <path-to-your-kubernetes-manifests>
+```
+
+Kubeconform is primarily designed to validate raw Kubernetes YAML or JSON files against the Kubernetes OpenAPI specification. However, Helm charts aren't raw Kubernetes resources; they're templates that generate Kubernetes resources.
+
+If you want to validate a Helm chart with Kubeconform, you would first need to render your Helm chart to raw Kubernetes resources. You can do this using the `helm template` command, which will output the Kubernetes resources as YAML to the console. This output can then be validated using Kubeconform.
+
+You can achieve this with the following command:
+
+```bash
+helm template samples/chart/ngsa| kubeconform -strict -
+```
+
+It's important to note that you may encounter an error with the previous command regarding a missing schema for ServiceMonitor. This occurs because Custom Resources (CRs) are not native Kubernetes objects and, therefore, are not included in the default schema. If your CRs are present in [Datree's CRDs-catalog](https://github.com/datreeio/CRDs-catalog), you can specify this project as an additional registry for schema lookup.
+
+```bash
+# Look in the CRDs-catalog for the desired schema/s
+helm template samples/chart/ngsa | \
+kubeconform \
+  -strict \
+  -schema-location default \
+  -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+  -
+```
+
 
 ## Customizing the Devcontainer
 
