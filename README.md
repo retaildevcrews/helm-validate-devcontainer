@@ -70,10 +70,10 @@ Kube Linter supports advanced configurations, allowing you to customize its beha
 To run unit tests for your Helm charts using the `helm unittest` plugin, execute the following command:
 
 ``` bash
-helm unittest <path-to-your-helm-chart>
+helm unittest samples/chart/ngsa/
 ```
 
-This command will run all the unit tests defined in the `_test.yaml` files within your Helm chart's `tests` directory.
+This command will run all the unit tests defined in the `_test.yaml` files within your Helm chart's `tests` directory. For more information how how to write unit tests, please refer to the [helm-unittest repo](https://github.com/helm-unittest/helm-unittest)
 
 
 ### Validating with Kubeconform
@@ -96,7 +96,7 @@ You can achieve this with the following command:
 helm template samples/chart/ngsa| kubeconform -strict -
 ```
 
-It's important to note that you may encounter an error with the previous command regarding a missing schema for ServiceMonitor. This occurs because Custom Resources (CRs) are not native Kubernetes objects and, therefore, are not included in the default schema. If your CRs are present in [Datree's CRDs-catalog](https://github.com/datreeio/CRDs-catalog), you can specify this project as an additional registry for schema lookup.
+It's important to note that you may encounter an error with the previous command regarding a missing schema for ServiceMonitor. This occurs because Custom Resource Definitions (CRDs) are not native Kubernetes objects and, therefore, are not included in the default schema. If your CRDs are present in [Datree's CRDs-catalog](https://github.com/datreeio/CRDs-catalog), you can specify this project as an additional registry for schema lookup.
 
 ```bash
 # Look in the CRDs-catalog for the desired schema/s
