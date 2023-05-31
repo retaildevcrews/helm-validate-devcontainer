@@ -1,0 +1,7 @@
+{
+	"name": "Helm Validate",
+	"image": "ghcr.io/nguyena2/friendlyfiesta",
+	"runArgs": ["--init", "--privileged"],
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
+	"overrideCommand": false
+}

@@ -1,0 +1,4 @@
+{
+	"name": "Helm Validate",
+	"image": "ghcr.io/joaquinrz/helmv-devcontainer"
+}

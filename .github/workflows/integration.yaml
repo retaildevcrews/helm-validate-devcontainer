@@ -1,0 +1,75 @@
+name: Helm Validate
+on:
+    # Trigger unit test at every push. Action will also be visible from Pull Requests to master
+    push: # Comment this line to trigger action only on pull-requests (not recommended if you don't pay for GH Actions)
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    name: Validate NGSA Helm Chart
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2 
+        with:
+            registry: ghcr.io
+            username: ${{ github.repository_owner }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Kube Linter
+        id: helm-lint
+        uses: devcontainers/ci@v0.3
+        with:
+          subFolder: container1-src
+          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          push: never
+          runCmd: |
+              kube-linter lint /workspaces/helm-validate-devcontainer/samples/chart/ngsa
+
+      - name: Run Helm Unit Tests
+        id: helm-unittest
+        uses: devcontainers/ci@v0.3
+        with:
+          subFolder: container1-src
+          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          push: never
+          runCmd: |
+              cp -R /workspaces/helm-validate-devcontainer/samples/chart/ngsa /tmp
+              helm unittest /tmp/ngsa
+
+      - name: Run Kubeconform Checks
+        id: kubeconform-checks
+        uses: devcontainers/ci@v0.3
+        with:
+          subFolder: container1-src
+          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          push: never
+          runCmd: |
+              helm template /workspaces/helm-validate-devcontainer/samples/chart/ngsa | \
+              kubeconform \
+              -strict \
+              -schema-location default \
+              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+              
+      - name: Run K3D Cluster
+        id: k3d-cluster
+        uses: devcontainers/ci@v0.3
+        with:
+            subFolder: container2-src
+            cacheFrom: ghcr.io/nguyena2/friendlyfiesta
+            push: never
+            runCmd: |
+                k3d cluster create
+                kubectl config use-context k3d-k3s-default
+                helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+                helm install -f /workspaces/helm-validate-devcontainer/samples/prometheus/values.yaml prometheus prometheus-community/kube-prometheus-stack
+                kubectl get pods
+                sleep 30
+                helm install ngsa /workspaces/helm-validate-devcontainer/samples/chart/ngsa
+                sleep 30
+                kubectl get pods
+                
+            
