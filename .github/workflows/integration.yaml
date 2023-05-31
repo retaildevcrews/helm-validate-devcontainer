@@ -23,7 +23,7 @@ jobs:
         id: helm-lint
         uses: devcontainers/ci@v0.3
         with:
-          subFolder: container1-src
+          subFolder: helm-validate
           cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
           push: never
           runCmd: |
@@ -33,7 +33,7 @@ jobs:
         id: helm-unittest
         uses: devcontainers/ci@v0.3
         with:
-          subFolder: container1-src
+          subFolder: helm-validate
           cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
           push: never
           runCmd: |
@@ -44,7 +44,7 @@ jobs:
         id: kubeconform-checks
         uses: devcontainers/ci@v0.3
         with:
-          subFolder: container1-src
+          subFolder: helm-validate
           cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
           push: never
           runCmd: |
@@ -58,7 +58,7 @@ jobs:
         id: k3d-cluster
         uses: devcontainers/ci@v0.3
         with:
-            subFolder: container2-src
+            subFolder: dind-k3d
             cacheFrom: ghcr.io/nguyena2/friendlyfiesta
             push: never
             runCmd: |
