@@ -52,7 +52,7 @@ jobs:
               kubeconform \
               -strict \
               -schema-location default \
-              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
               
       - name: Run K3D Cluster
         id: k3d-cluster
@@ -66,10 +66,10 @@ jobs:
                 kubectl config use-context k3d-k3s-default
                 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
                 helm install -f /workspaces/helm-validate-devcontainer/samples/prometheus/values.yaml prometheus prometheus-community/kube-prometheus-stack
+                kubectl wait --for=condition=Ready --timeout=30s pod -l app.kubernetes.io/name=prometheus
                 kubectl get pods
-                sleep 30
                 helm install ngsa /workspaces/helm-validate-devcontainer/samples/chart/ngsa
-                sleep 30
+                kubectl wait --for=condition=Ready --timeout=30s pod -l app=ngsa
                 kubectl get pods
                 
             
