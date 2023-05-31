@@ -28,6 +28,13 @@ spec:
             - name: http
               containerPort: {{ .Values.port }}
               protocol: TCP
+          # readinessProbe:
+          #   initialDelaySeconds: 5
+          #   failureThreshold: 60
+          #   periodSeconds: 2
+          #   httpGet:
+          #     path: /readyz
+          #     port: {{ .Values.port }}
           livenessProbe:
             initialDelaySeconds: 60
             periodSeconds: 60

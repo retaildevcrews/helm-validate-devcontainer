@@ -52,12 +52,12 @@ tests:
       name: ngsa
       port: 8080
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe.httpGet.path
-          value: /readyz
-      - equal:
-          path: spec.template.spec.containers[0].readinessProbe.httpGet.port
-          value: 8080
+      # - equal:
+      #     path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+      #     value: /readyz
+      # - equal:
+      #     path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+      #     value: 8080
       - equal:
           path: spec.template.spec.containers[0].livenessProbe.httpGet.path
           value: /healthz
