@@ -48,7 +48,7 @@ VOLUME [ "/var/lib/docker" ]
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
-# ### Build k3d image from Docker-in-Docker
+### Build k3d image from Docker-in-Docker
 FROM dind as k3d
 
 ARG USERNAME=vscode

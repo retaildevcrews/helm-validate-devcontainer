@@ -37,7 +37,10 @@ jobs:
           cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
           push: never
           runCmd: |
+              # Copy files to tmp folder
               cp -R /workspaces/helm-validate-devcontainer/samples/chart/ngsa /tmp
+
+              # Unit test on copied folder
               helm unittest /tmp/ngsa
 
       - name: Run Kubeconform Checks
@@ -48,6 +51,7 @@ jobs:
           cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
           push: never
           runCmd: |
+              # Template chart with values and kubeconform
               helm template /workspaces/helm-validate-devcontainer/samples/chart/ngsa | \
               kubeconform \
               -strict \
@@ -62,13 +66,22 @@ jobs:
             cacheFrom: ghcr.io/nguyena2/friendlyfiesta
             push: never
             runCmd: |
+                # Create k3d cluster
                 k3d cluster create
                 kubectl config use-context k3d-k3s-default
+
+                # Install prometheus for ngsa
                 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
                 helm install -f /workspaces/helm-validate-devcontainer/samples/prometheus/values.yaml prometheus prometheus-community/kube-prometheus-stack
+                
+                # Wait for prometheus to be running
                 kubectl wait --for=condition=Ready --timeout=30s pod -l app.kubernetes.io/name=prometheus
                 kubectl get pods
+
+                # Install ngsa
                 helm install ngsa /workspaces/helm-validate-devcontainer/samples/chart/ngsa
+
+                # Wait for ngsa to be running
                 kubectl wait --for=condition=Ready --timeout=30s pod -l app=ngsa
                 kubectl get pods
                 
