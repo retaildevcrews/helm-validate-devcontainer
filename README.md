@@ -40,7 +40,7 @@ cd helm-validate-devcontainer
 
 2. Open the repository in Visual Studio Code.
 
-3. Configure the devcontainer.json at the root .devcontainer to specify which image to use. A published image or a local Dockerfile can be targeted.
+3. Configure the `devcontainer.json` at the root `.devcontainer` to specify which image to use. A published image or a local Dockerfile can be targeted. Currently, only one dev container can be run at a time. Multiple dev containers can be run by following the docker-compose pattern, but this project is not setup to do that scenario at this time.
 
 4. Press `F1` and type `Dev Containers: Reopen in Container`, then press `Enter`. This will build the Docker container and open the repository inside the container.
 
@@ -154,11 +154,12 @@ The main purpose for this repo is to test all the ideas outlined above in a Gith
 
 ### Devcontainer Build
 
-The devcontainer-build workflow builds the helm-validate image and pushes it to a pre-determined container registry. Currently, it is pointing to `ghcr.io/retaildevcrews/helmv-devcontainer:latest`.
+`helmv-build.yaml` workflow builds the helm-validate devcontainer image and pushes it to `ghcr.io/retaildevcrews/helmv-devcontainer`.
+`k3d-validate-build` workflow builds the k3d docker-in-docker devcontainer image and pushes it to `ghcr.io/retaildevcrews/k3d-helmvalidate`.
 
 ### Integration
 
-The integration workflow utilizes the pre-built image `ghcr.io/retaildevcrews/helmv-devcontainer:latest` for helm validation and `ghcr.io/retaildevcrews/k3d-helmvalidate` for dind-k3d chart deployment. 
+The integration workflow utilizes the pre-built image `ghcr.io/retaildevcrews/helmv-devcontainer` for helm validation and `ghcr.io/retaildevcrews/k3d-helmvalidate` for dind-k3d chart deployment. The idea is that the integration workflow is a representation of an cluster-add-on owner utilizing a pre-built common image of tools to validate its components and integration testing before deploying to a live cluster.
 
 By default, workflows will target the `devcontainer.json` at the root level. However, workflows can utilize multiple devcontainer configs by specifying a subfolder and utilizing the folder structure as set up in this project. This allows for multiple images to be built with only the necessary tools as required, keeping the image size to a minimum. 
 

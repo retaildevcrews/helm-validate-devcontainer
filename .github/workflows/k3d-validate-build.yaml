@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - nguyena2/**
     paths:
       - 'dind-k3d/**'
       - '.github/workflows/k3d-validate-build.yml'
