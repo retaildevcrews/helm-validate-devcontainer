@@ -1,5 +1,5 @@
 # Build stage
-FROM mcr.microsoft.com/vscode/devcontainers/dotnet as dind
+FROM mcr.microsoft.com/devcontainers/base:debian as dind
 
 # user args
 # some base images require specific values
@@ -23,7 +23,7 @@ RUN mkdir -p /home/${USERNAME}/.local/bin && \
 COPY dind-k3d/scripts/*.sh /scripts/
 
 RUN apt-get update && \
-    apt-get -y install --no-install-recommends apt-utils dialog apt-transport-https ca-certificates curl wget && \
+    /bin/bash /scripts/common-tools.sh && \
     /bin/bash /scripts/docker-in-docker-debian.sh && \
     /bin/bash /scripts/kubectl-helm-debian.sh && \
     /bin/bash /scripts/dind-debian.sh && \

@@ -101,7 +101,7 @@ If you want to validate a Helm chart with Kubeconform, you would first need to r
 You can achieve this with the following command:
 
 ```bash
-helm template samples/chart/ngsa| kubeconform -strict -
+helm template samples/chart/ngsa | kubeconform -strict -
 ```
 
 It's important to note that you may encounter an error with the previous command regarding a missing schema for ServiceMonitor. This occurs because Custom Resource Definitions (CRDs) are not native Kubernetes objects and, therefore, are not included in the default schema. If your CRDs are present in [Datree's CRDs-catalog](https://github.com/datreeio/CRDs-catalog), you can specify this project as an additional registry for schema lookup.
@@ -154,11 +154,11 @@ The main purpose for this repo is to test all the ideas outlined above in a Gith
 
 ### Devcontainer Build
 
-The devcontainer-build workflow builds the helm-validate image and pushes it to a pre-determined container registry. Currently, it is pointing to `ghcr.io/joaquinrz/helmv-devcontainer:latest`.
+The devcontainer-build workflow builds the helm-validate image and pushes it to a pre-determined container registry. Currently, it is pointing to `ghcr.io/retaildevcrews/helmv-devcontainer:latest`.
 
 ### Integration
 
-The integration workflow utilizes the pre-built image `ghcr.io/joaquinrz/helmv-devcontainer:latest` for helm validation and `ghcr.io/nguyena2/friendlyfiesta` for dind-k3d chart deployment. 
+The integration workflow utilizes the pre-built image `ghcr.io/retaildevcrews/helmv-devcontainer:latest` for helm validation and `ghcr.io/retaildevcrews/k3d-helmvalidate` for dind-k3d chart deployment. 
 
 By default, workflows will target the `devcontainer.json` at the root level. However, workflows can utilize multiple devcontainer configs by specifying a subfolder and utilizing the folder structure as set up in this project. This allows for multiple images to be built with only the necessary tools as required, keeping the image size to a minimum. 
 
@@ -170,7 +170,7 @@ name: Run Kube Linter
   uses: devcontainers/ci@v0.3
   with:
     subFolder: helm-validate
-    cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+    cacheFrom: ghcr.io/retaildevcrews/helmv-devcontainer
     push: never
     runCmd: |
         kube-linter lint /workspaces/helm-validate-devcontainer/samples/chart/ngsa
