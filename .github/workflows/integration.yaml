@@ -1,4 +1,4 @@
-name: Helm Validate
+name: Helm Validation and Integration Tests
 on:
   pull_request: 
     branches:
