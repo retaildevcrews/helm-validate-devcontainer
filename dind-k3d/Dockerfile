@@ -19,8 +19,9 @@ RUN mkdir -p /home/${USERNAME}/.local/bin && \
     mkdir -p /home/${USERNAME}/go/bin && \
     chsh --shell /bin/zsh vscode
 
+RUN echo ls
 # copy the stup scripts to the image
-COPY dind-k3d/scripts/*.sh /scripts/
+COPY ./dind-k3d/scripts/*.sh /scripts/
 
 RUN apt-get update
 RUN apt-get -y install --no-install-recommends apt-utils dialog apt-transport-https ca-certificates curl wget
