@@ -40,8 +40,7 @@ jobs:
       - name: Build and push k3d-helmvalidate
         uses: docker/build-push-action@v4
         with:
-          file: 'dind-k3d/Dockerfile'
-          context: 'dind-k3d/.devcontainer'
+          context: 'dind-k3d/'
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/retaildevcrews/k3d-helmvalidate:latest
