@@ -24,7 +24,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           subFolder: helm-validate
-          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          cacheFrom: ghcr.io/retaildevcrews/helmv-devcontainer
           push: never
           runCmd: |
               kube-linter lint /workspaces/helm-validate-devcontainer/samples/chart/ngsa
@@ -34,7 +34,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           subFolder: helm-validate
-          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          cacheFrom: ghcr.io/retaildevcrews/helmv-devcontainer
           push: never
           runCmd: |
               # Copy files to tmp folder
@@ -48,7 +48,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           subFolder: helm-validate
-          cacheFrom: ghcr.io/joaquinrz/helmv-devcontainer
+          cacheFrom: ghcr.io/retaildevcrews/helmv-devcontainer
           push: never
           runCmd: |
               # Template chart with values and kubeconform
@@ -63,7 +63,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
             subFolder: dind-k3d
-            cacheFrom: ghcr.io/nguyena2/friendlyfiesta
+            cacheFrom: ghcr.io/retaildevcrews/k3d-helmvalidate
             push: never
             runCmd: |
                 # Create k3d cluster

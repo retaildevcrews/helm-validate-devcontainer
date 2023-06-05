@@ -9,13 +9,11 @@ ARG USER_GID=$USER_UID
 
 # configure apt-get
 ENV DEBIAN_FRONTEND noninteractive
-ENV PATH $PATH:/usr/local/go/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.dotnet/tools:/opt/fluent-bit/bin
+ENV PATH $PATH:/usr/local/go/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin
 ENV COMPlus_EnableDiagnostics=0
 ENV COMPlus_EnableWriteXorExecute=0
 
 RUN mkdir -p /home/${USERNAME}/.local/bin && \
-    mkdir -p /home/${USERNAME}/.dotnet/tools && \
-    mkdir -p /home/${USERNAME}/.dapr/bin && \
     mkdir -p /home/${USERNAME}/.ssh && \
     mkdir -p /home/${USERNAME}/.oh-my-zsh/completions && \
     mkdir -p /home/${USERNAME}/go/bin && \
@@ -54,7 +52,7 @@ FROM dind as k3d
 ARG USERNAME=vscode
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV PATH $PATH:/usr/local/go/bin:/usr/local/istio/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin:/home/${USERNAME}/.dotnet/tools:/home/${USERNAME}/.dapr/bin
+ENV PATH $PATH:/usr/local/go/bin:/usr/local/istio/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin
 
 # install kind / k3d
 RUN /bin/bash /scripts/kind-k3d-debian.sh

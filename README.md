@@ -1,6 +1,6 @@
 # Helm Validate - Devcontainer
 
-This repository contains a development container (devcontainer) to streamline the process of validating and testing Helm charts. The devcontainer is pre-configured with essential tools, such as `kube-linter` for linting Kubernetes resources and `helm unittest` for running Helm chart unit tests, and `kubeconform` for validating Kubernetes resources. K3D is then used to deploy a light-weight cluster to run the Helm chart.
+This repository contains a development container (devcontainer) to streamline the process of validating and testing Helm charts. The devcontainer is pre-configured with essential tools, such as `kube-linter` for linting Kubernetes resources and `helm unittest` for running Helm chart unit tests, and `kubeconform` for validating Kubernetes resources. K3D is then used to deploy a light-weight cluster to run the Helm chart for integration testing.
 
 ## Table of Contents
 

@@ -2,11 +2,11 @@ name: Build Helm Validate - DevContainer
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
 
-    paths:
-    - 'helm-validate/Dockerfile'
+    # paths:
+    # - 'helm-validate/Dockerfile'
 
 jobs:
   build:
@@ -28,10 +28,18 @@ jobs:
           username: ${{ secrets.GHCR_ID }}
           password: ${{ secrets.GHCR_PAT }}
       
-      - name: Build and push
+      - name: Build and push helmv-devcontainer
         uses: docker/build-push-action@v4
         with:
           context: 'helm-validate/.devcontainer'
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/joaquinrz/helmv-devcontainer:latest
+          tags: ghcr.io/retaildevcrews/helmv-devcontainer:latest
+
+      - name: Build and push k3d-helmvalidate
+        uses: docker/build-push-action@v4
+        with:
+          context: 'dind-k3d/.devcontainer'
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/retaildevcrews/k3d-helmvalidate:latest
