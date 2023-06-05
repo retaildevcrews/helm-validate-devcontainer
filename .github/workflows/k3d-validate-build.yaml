@@ -1,10 +1,13 @@
-name: Build Helm Validate - DevContainer
+name: Build K3D Validate - DevContainer
 
 on:
   push:
     branches:
       - main
-      - master
+      - nguyena2/**
+    paths:
+      - 'dind-k3d/**'
+      - '.github/workflows/k3d-validate-build.yml'
 
 jobs:
   build:
@@ -25,14 +28,6 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GHCR_ID }}
           password: ${{ secrets.GHCR_PAT }}
-      
-      - name: Build and push helmv-devcontainer
-        uses: docker/build-push-action@v4
-        with:
-          context: 'helm-validate'
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/retaildevcrews/helmv-devcontainer:latest
 
       - name: Build and push k3d-helmvalidate
         uses: docker/build-push-action@v4

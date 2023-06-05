@@ -22,18 +22,15 @@ RUN mkdir -p /home/${USERNAME}/.local/bin && \
 # copy the stup scripts to the image
 COPY dind-k3d/scripts/*.sh /scripts/
 
-RUN apt-get update
-RUN apt-get -y install --no-install-recommends apt-utils dialog apt-transport-https ca-certificates curl wget
-
-RUN /bin/bash /scripts/docker-in-docker-debian.sh
-RUN /bin/bash /scripts/kubectl-helm-debian.sh
-RUN /bin/bash /scripts/dind-debian.sh
-
-# Changing ownership and setting user
-RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends apt-utils dialog apt-transport-https ca-certificates curl wget && \
+    /bin/bash /scripts/docker-in-docker-debian.sh && \
+    /bin/bash /scripts/kubectl-helm-debian.sh && \
+    /bin/bash /scripts/dind-debian.sh && \
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 
 WORKDIR /home/${USERNAME}
-USER ${USERNAME}
+# USER ${USERNAME}
 
 USER root
 
@@ -55,18 +52,11 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PATH $PATH:/usr/local/go/bin:/usr/local/istio/bin:/home/${USERNAME}/go/bin:/home/${USERNAME}/.local/bin
 
 # install kind / k3d
-RUN /bin/bash /scripts/kind-k3d-debian.sh
-
-# change ownership of the home directory
-RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
-
-# customize first run message
-RUN echo "👋 Welcome to Codespaces! You are on a custom image defined in your devcontainer.json file.\n" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
-    echo "🔍 To explore VS Code to its fullest, search using the Command Palette (Cmd/Ctrl + Shift + P)\n" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
-    echo "👋 Welcome to the k3d Codespaces image\n" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt
-
-# update the container
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get autoremove -y && \
+RUN /bin/bash /scripts/kind-k3d-debian.sh && \
+    # change ownership of the home directory
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} && \
+    # update the container
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get autoremove -y && \
     apt-get clean -y
