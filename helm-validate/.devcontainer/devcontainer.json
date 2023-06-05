@@ -1,5 +1,4 @@
 {
 	"name": "Helm Validate",
 	"image": "ghcr.io/retaildevcrews/helmv-devcontainer"
-	//"dockerFile": "Dockerfile"
 }

@@ -1,0 +1,7 @@
+{
+	"name": "K3D Docker in Docker",
+	"image": "ghcr.io/retaildevcrews/k3d-helmvalidate",
+	"runArgs": ["--init", "--privileged"],
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
+	"overrideCommand": false
+}

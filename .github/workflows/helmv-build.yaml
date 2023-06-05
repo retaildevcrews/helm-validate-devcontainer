@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-
     paths:
-    - '.devcontainer/Dockerfile'
+      - 'helm-validate/**'
+      - '.github/workflows/helmv-build.yaml'
 
 jobs:
   build:
@@ -28,10 +28,10 @@ jobs:
           username: ${{ secrets.GHCR_ID }}
           password: ${{ secrets.GHCR_PAT }}
       
-      - name: Build and push
+      - name: Build and push helmv-devcontainer
         uses: docker/build-push-action@v4
         with:
-          context: '.devcontainer'
+          context: 'helm-validate'
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/joaquinrz/helmv-devcontainer:latest
+          tags: ghcr.io/retaildevcrews/helmv-devcontainer:latest
